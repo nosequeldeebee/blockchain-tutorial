@@ -2,6 +2,8 @@
 
 ### Tutorial
 
+[Read](https://medium.com/@mycoralhealth/code-your-own-blockchain-in-less-than-200-lines-of-go-e296282bcffc) our blog post first to see a walkthrough of the code.
+
 ### Deployment steps:
 - `git clone https://github.com/mycoralhealth/blockchain-tutorial.git`
 - navigate to this directory and rename the example file `mv example.env .env`
