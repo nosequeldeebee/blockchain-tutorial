@@ -5,7 +5,7 @@
 
 [Read Part 1 first!](https://medium.com/@mycoralhealth/code-your-own-blockchain-in-less-than-200-lines-of-go-e296282bcffc)
 
-[Read the Part 2 Tutorial]() to see a walkthrough of the code.
+[Read the Part 2 Tutorial]() to see a walkthrough of the code. _COMING SOON!_
 
 ### Deployment steps:
 - clone this repo
