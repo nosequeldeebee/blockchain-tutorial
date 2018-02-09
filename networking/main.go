@@ -10,6 +10,7 @@ import (
 	"net"
 	"os"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
@@ -30,6 +31,7 @@ var Blockchain []Block
 
 // bcServer handles incoming concurrent Blocks
 var bcServer chan []Block
+var mutex = &sync.Mutex{}
 
 func main() {
 	err := godotenv.Load()
@@ -97,10 +99,12 @@ func handleConn(conn net.Conn) {
 	go func() {
 		for {
 			time.Sleep(30 * time.Second)
+			mutex.Lock()
 			output, err := json.Marshal(Blockchain)
 			if err != nil {
 				log.Fatal(err)
 			}
+			mutex.Unlock()
 			io.WriteString(conn, string(output))
 		}
 	}()
