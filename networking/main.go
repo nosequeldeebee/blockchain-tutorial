@@ -10,6 +10,7 @@ import (
 	"net"
 	"os"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
@@ -27,6 +28,9 @@ type Block struct {
 
 // Blockchain is a series of validated Blocks
 var Blockchain []Block
+
+// mutex to lock Blockchain
+var mBlockchain = sync.Mutex{}
 
 // bcServer handles incoming concurrent Blocks
 var bcServer chan []Block
@@ -78,6 +82,7 @@ func handleConn(conn net.Conn) {
 				log.Printf("%v not a number: %v", scanner.Text(), err)
 				continue
 			}
+			mBlockchain.Lock()
 			newBlock, err := generateBlock(Blockchain[len(Blockchain)-1], bpm)
 			if err != nil {
 				log.Println(err)
@@ -89,6 +94,7 @@ func handleConn(conn net.Conn) {
 			}
 
 			bcServer <- Blockchain
+			mBlockchain.Unlock()
 			io.WriteString(conn, "\nEnter a new BPM:")
 		}
 	}()
@@ -97,7 +103,9 @@ func handleConn(conn net.Conn) {
 	go func() {
 		for {
 			time.Sleep(30 * time.Second)
+			mBlockchain.Lock()
 			output, err := json.Marshal(Blockchain)
+			mBlockchain.Unlock()
 			if err != nil {
 				log.Fatal(err)
 			}
