@@ -109,6 +109,7 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
+	//ensure atomicity when creating new block
 	mutex.Lock()
 	newBlock, err := generateBlock(Blockchain[len(Blockchain)-1], m.BPM)
 	if err != nil {
@@ -127,6 +128,7 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 }
 
 func respondWithJSON(w http.ResponseWriter, r *http.Request, code int, payload interface{}) {
+	w.Header().Set("Content-Type", "application/json")
 	response, err := json.MarshalIndent(payload, "", "  ")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
