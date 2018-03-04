@@ -114,11 +114,7 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 
 	//ensure atomicity when creating new block
 	mutex.Lock()
-	newBlock, err := generateBlock(Blockchain[len(Blockchain)-1], m.BPM)
-	if err != nil {
-		respondWithJSON(w, r, http.StatusInternalServerError, m)
-		return
-	}
+	newBlock := generateBlock(Blockchain[len(Blockchain)-1], m.BPM)
 	mutex.Unlock()
 
 	if isBlockValid(newBlock, Blockchain[len(Blockchain)-1]) {
@@ -169,7 +165,7 @@ func calculateHash(block Block) string {
 }
 
 // create a new block using previous block's hash
-func generateBlock(oldBlock Block, BPM int) (Block, error) {
+func generateBlock(oldBlock Block, BPM int) Block {
 	var newBlock Block
 
 	t := time.Now()
@@ -194,7 +190,7 @@ func generateBlock(oldBlock Block, BPM int) (Block, error) {
 		}
 
 	}
-	return newBlock, nil
+	return newBlock
 }
 
 func isHashValid(hash string, difficulty int) bool {
