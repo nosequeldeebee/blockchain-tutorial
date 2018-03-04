@@ -19,7 +19,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-const difficulty = 2
+const difficulty = 1
 
 // Block represents each 'item' in the blockchain
 type Block struct {
@@ -53,7 +53,10 @@ func main() {
 		genesisBlock := Block{}
 		genesisBlock = Block{0, t.String(), 0, calculateHash(genesisBlock), "", difficulty, ""}
 		spew.Dump(genesisBlock)
+
+		mutex.Lock()
 		Blockchain = append(Blockchain, genesisBlock)
+		mutex.Unlock()
 	}()
 	log.Fatal(run())
 
@@ -182,6 +185,7 @@ func generateBlock(oldBlock Block, BPM int) (Block, error) {
 		newBlock.Nonce = hex
 		if !isHashValid(calculateHash(newBlock), newBlock.Difficulty) {
 			fmt.Println(calculateHash(newBlock), " do more work!")
+			time.Sleep(time.Second)
 			continue
 		} else {
 			fmt.Println(calculateHash(newBlock), " work done!")
@@ -190,7 +194,6 @@ func generateBlock(oldBlock Block, BPM int) (Block, error) {
 		}
 
 	}
-
 	return newBlock, nil
 }
 

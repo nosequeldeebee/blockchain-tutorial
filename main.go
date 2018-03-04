@@ -47,7 +47,10 @@ func main() {
 		genesisBlock := Block{}
 		genesisBlock = Block{0, t.String(), 0, calculateHash(genesisBlock), ""}
 		spew.Dump(genesisBlock)
+
+		mutex.Lock()
 		Blockchain = append(Blockchain, genesisBlock)
+		mutex.Unlock()
 	}()
 	log.Fatal(run())
 
