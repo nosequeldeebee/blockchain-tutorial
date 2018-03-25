@@ -242,13 +242,6 @@ func isBlockValid(newBlock, oldBlock Block) bool {
 	return true
 }
 
-// replaceChain supplants old blockchain with new, longer chain
-func replaceChain(newBlocks []Block) {
-	mutex.Lock()
-	Blockchain = newBlocks
-	mutex.Unlock()
-}
-
 // SHA256 hasing
 // calculateHash is a simple SHA256 hashing function
 func calculateHash(s string) string {
