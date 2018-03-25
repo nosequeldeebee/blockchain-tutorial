@@ -90,7 +90,7 @@ func main() {
 // pickWinner creates a lottery pool of validators and chooses the validator who gets to forge a block to the blockchain
 // by random selecting from the pool, weighted by amount of tokens staked
 func pickWinner() {
-	time.Sleep(15 * time.Second)
+	time.Sleep(30 * time.Second)
 	mutex.Lock()
 	temp := tempBlocks
 	mutex.Unlock()
@@ -212,7 +212,7 @@ func handleConn(conn net.Conn) {
 
 	// simulate receiving broadcast
 	for {
-		time.Sleep(20 * time.Second)
+		time.Sleep(time.Minute)
 		mutex.Lock()
 		output, err := json.Marshal(Blockchain)
 		mutex.Unlock()
