@@ -57,11 +57,14 @@ func main() {
 	spew.Dump(genesisBlock)
 	Blockchain = append(Blockchain, genesisBlock)
 
+	httpPort := os.Getenv("PORT")
+
 	// start TCP and serve TCP server
-	server, err := net.Listen("tcp", ":"+os.Getenv("ADDR"))
+	server, err := net.Listen("tcp", ":"+httpPort)
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println("HTTP Server Listening on port :", httpPort)
 	defer server.Close()
 
 	go func() {
