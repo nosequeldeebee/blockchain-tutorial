@@ -59,10 +59,10 @@ func main() {
 // web server
 func run() error {
 	mux := makeMuxRouter()
-	httpAddr := os.Getenv("ADDR")
-	log.Println("Listening on ", os.Getenv("ADDR"))
+	httpPort := os.Getenv("PORT")
+	log.Println("HTTP Server Listening on port :", httpPort)
 	s := &http.Server{
-		Addr:           ":" + httpAddr,
+		Addr:           ":" + httpPort,
 		Handler:        mux,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
