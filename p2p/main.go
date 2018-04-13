@@ -18,17 +18,16 @@ import (
 	"sync"
 	"time"
 
-	gologging "gx/ipfs/QmQvJiADDe7JR4m968MwXobTCCzUqQkP87aRHe29MEBGHV/go-logging"
-	net "gx/ipfs/QmRQX1yaPQFynWkByKcQTPpy3uC21oXZ5X32KEcLZnefz8/go-libp2p-net"
-	golog "gx/ipfs/QmRb5jh8z2E8hMGN2tkvs1yHynUanqnZ3UeKwgN1i9P1F8/go-log"
-	host "gx/ipfs/QmWPKovoJxF2bfiYLQK6xPeFvMJW8hX6RFRuA9bv6cURha/go-libp2p-host"
-	ma "gx/ipfs/QmWWQ2Txc2c6tqjsBpzg5Ar652cHPGNsQQp2SejkNmkUMb/go-multiaddr"
-	pstore "gx/ipfs/QmXauCuJzmzapetmC6W4TuDJLL1yFFrVzSHoWv8YdbmnxH/go-libp2p-peerstore"
-	peer "gx/ipfs/QmZoWKhxUmZ2seW4BzX6fJkNR8hh9PsGModr7q171yq2SS/go-libp2p-peer"
-	crypto "gx/ipfs/QmaPbCnUMBohSGo3KnxEa2bHqyJVVeEEcwtqJAYxerieBo/go-libp2p-crypto"
-
 	"github.com/davecgh/go-spew/spew"
+	golog "github.com/ipfs/go-log"
 	libp2p "github.com/libp2p/go-libp2p"
+	crypto "github.com/libp2p/go-libp2p-crypto"
+	host "github.com/libp2p/go-libp2p-host"
+	net "github.com/libp2p/go-libp2p-net"
+	peer "github.com/libp2p/go-libp2p-peer"
+	pstore "github.com/libp2p/go-libp2p-peerstore"
+	ma "github.com/multiformats/go-multiaddr"
+	gologging "github.com/whyrusleeping/go-logging"
 )
 
 // Block represents each 'item' in the blockchain
