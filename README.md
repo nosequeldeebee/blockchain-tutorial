@@ -15,6 +15,7 @@ Join our [Telegram](https://t.me/joinchat/FX6A7UThIZ1WOUNirDS_Ew) chat and follo
 - [Proof of Work](https://github.com/mycoralhealth/blockchain-tutorial/tree/master/proof-work)
 - [Proof of Stake](https://github.com/mycoralhealth/blockchain-tutorial/tree/master/proof-stake)
 - [IPFS](https://medium.com/@mycoralhealth/learn-to-securely-share-files-on-the-blockchain-with-ipfs-219ee47df54c)
+- [P2P](https://medium.com/coinmonks/code-a-simple-p2p-blockchain-in-go-46662601f417)
 
 ### Deployment steps:
 - `git clone https://github.com/mycoralhealth/blockchain-tutorial.git`
