@@ -17,6 +17,7 @@ Join our [Telegram](https://t.me/joinchat/FX6A7UThIZ1WOUNirDS_Ew) chat and follo
 - [IPFS](https://medium.com/@mycoralhealth/learn-to-securely-share-files-on-the-blockchain-with-ipfs-219ee47df54c)
 - [P2P](https://medium.com/coinmonks/code-a-simple-p2p-blockchain-in-go-46662601f417)
 - [Advanced Concepts for Beginners](https://medium.com/@mycoralhealth/advanced-blockchain-concepts-for-beginners-32887202afad)
+- [Start your own Hyperledger blockchain the Easy Way!](https://medium.com/@mycoralhealth/start-your-own-hyperledger-blockchain-the-easy-way-5758cb4ed2d1)
 
 ### Deployment steps:
 - `git clone https://github.com/mycoralhealth/blockchain-tutorial.git`
