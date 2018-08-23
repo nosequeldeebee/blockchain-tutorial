@@ -19,7 +19,7 @@ Join our [Telegram](https://t.me/joinchat/FX6A7UThIZ1WOUNirDS_Ew) chat and follo
 - [Advanced Concepts for Beginners](https://medium.com/@mycoralhealth/advanced-blockchain-concepts-for-beginners-32887202afad)
 - [Start your own Hyperledger blockchain the Easy Way!](https://medium.com/@mycoralhealth/start-your-own-hyperledger-blockchain-the-easy-way-5758cb4ed2d1)
 - [Build a DApp on Hyperledger the Easy Way!](https://medium.com/@mycoralhealth/build-a-dapp-on-hyperledger-the-easy-way-178c39e503fa)
-- [Build your own Blockchain Twitter recorder](https://medium.com/@mycoralhealth/build-your-own-blockchain-twitter-recorder-in-go-4fa504e912c3)
+- [Build your own Blockchain Twitter recorder](https://github.com/mycoralhealth/twitter-blockchain)
 
 ### Deployment steps:
 - `git clone https://github.com/mycoralhealth/blockchain-tutorial.git`
