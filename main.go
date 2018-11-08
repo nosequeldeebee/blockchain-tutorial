@@ -106,15 +106,15 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	prevBlock := Blockchain[len(Blockchain)-1]
 	mutex.Lock()
+	prevBlock := Blockchain[len(Blockchain)-1]
 	newBlock := generateBlock(prevBlock, msg.BPM)
-	mutex.Unlock()
 
 	if isBlockValid(newBlock, prevBlock) {
 		Blockchain = append(Blockchain, newBlock)
 		spew.Dump(Blockchain)
 	}
+	mutex.Unlock()
 
 	respondWithJSON(w, r, http.StatusCreated, newBlock)
 
