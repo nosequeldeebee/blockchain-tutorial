@@ -80,7 +80,15 @@ func makeBasicHost(listenPort int, secio bool, randseed int64) (host.Host, error
 
 	// Now we can build a full multiaddress to reach this host
 	// by encapsulating both addresses:
-	addr := basicHost.Addrs()[0]
+	addrs := basicHost.Addrs()
+	var addr ma.Multiaddr
+	// select the address starting with "ip4"
+	for _, i := range addrs {
+		if strings.HasPrefix(i.String(), "/ip4") {
+			addr = i
+			break
+		}
+	}
 	fullAddr := addr.Encapsulate(hostAddr)
 	log.Printf("I am %s\n", fullAddr)
 	if secio {
