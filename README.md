@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/mycoralhealth/blockchain-tutorial.svg?branch=master)](https://travis-ci.org/mycoralhealth/blockchain-tutorial)
-
 # Code your own blockchain in less than 200 lines of Go!
 
 ### Tutorial
