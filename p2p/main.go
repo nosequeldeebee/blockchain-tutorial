@@ -20,14 +20,14 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 	golog "github.com/ipfs/go-log"
+	gologging "github.com/ipfs/go-log/v2"
 	libp2p "github.com/libp2p/go-libp2p"
-	crypto "github.com/libp2p/go-libp2p-crypto"
-	host "github.com/libp2p/go-libp2p-host"
-	net "github.com/libp2p/go-libp2p-net"
-	peer "github.com/libp2p/go-libp2p-peer"
-	pstore "github.com/libp2p/go-libp2p-peerstore"
+	crypto "github.com/libp2p/go-libp2p-core/crypto"
+	host "github.com/libp2p/go-libp2p-core/host"
+	net "github.com/libp2p/go-libp2p-core/network"
+	peer "github.com/libp2p/go-libp2p-core/peer"
+	pstore "github.com/libp2p/go-libp2p-core/peerstore"
 	ma "github.com/multiformats/go-multiaddr"
-	gologging "github.com/whyrusleeping/go-logging"
 )
 
 // Block represents each 'item' in the blockchain
@@ -219,7 +219,7 @@ func main() {
 	// LibP2P code uses golog to log messages. They log with different
 	// string IDs (i.e. "swarm"). We can control the verbosity level for
 	// all loggers with:
-	golog.SetAllLoggers(gologging.INFO) // Change to DEBUG for extra info
+	golog.SetAllLoggers(gologging.LevelInfo) // Change to LevelDebug for extra info
 
 	// Parse options from the command line
 	listenF := flag.Int("l", 0, "wait for incoming connections")
