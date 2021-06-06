@@ -83,15 +83,19 @@ func handleConn(conn net.Conn) {
 				log.Printf("%v not a number: %v", scanner.Text(), err)
 				continue
 			}
-			newBlock, err := generateBlock(Blockchain[len(Blockchain)-1], bpm)
+
+			mutex.Lock()
+			prevBlock := Blockchain[len(Blockchain)-1]
+			newBlock, err := generateBlock(prevBlock, bpm)
 			if err != nil {
 				log.Println(err)
 				continue
 			}
-			if isBlockValid(newBlock, Blockchain[len(Blockchain)-1]) {
+			if isBlockValid(newBlock, prevBlock) {
 				newBlockchain := append(Blockchain, newBlock)
 				replaceChain(newBlockchain)
 			}
+			mutex.Unlock()
 
 			bcServer <- Blockchain
 			io.WriteString(conn, "\nEnter a new BPM:")
@@ -112,7 +116,7 @@ func handleConn(conn net.Conn) {
 		}
 	}()
 
-	for _ = range bcServer {
+	for range bcServer {
 		spew.Dump(Blockchain)
 	}
 
@@ -146,7 +150,7 @@ func replaceChain(newBlocks []Block) {
 
 // SHA256 hasing
 func calculateHash(block Block) string {
-	record := string(block.Index) + block.Timestamp + string(block.BPM) + block.PrevHash
+	record := strconv.Itoa(block.Index) + block.Timestamp + strconv.Itoa(block.BPM) + block.PrevHash
 	h := sha256.New()
 	h.Write([]byte(record))
 	hashed := h.Sum(nil)
