@@ -137,7 +137,7 @@ func pickWinner() {
 				mutex.Lock()
 				Blockchain = append(Blockchain, block)
 				mutex.Unlock()
-				for _ = range validators {
+				for range validators {
 					announcements <- "\nwinning validator: " + lotteryWinner + "\n"
 				}
 				break
@@ -166,7 +166,7 @@ func handleConn(conn net.Conn) {
 	// the greater the number of tokens, the greater chance to forging a new block
 	io.WriteString(conn, "Enter token balance:")
 	scanBalance := bufio.NewScanner(conn)
-	for scanBalance.Scan() {
+	if scanBalance.Scan() {
 		balance, err := strconv.Atoi(scanBalance.Text())
 		if err != nil {
 			log.Printf("%v not a number: %v", scanBalance.Text(), err)
@@ -176,7 +176,6 @@ func handleConn(conn net.Conn) {
 		address = calculateHash(t.String())
 		validators[address] = balance
 		fmt.Println(validators)
-		break
 	}
 
 	io.WriteString(conn, "\nEnter a new BPM:")
@@ -196,16 +195,16 @@ func handleConn(conn net.Conn) {
 				}
 
 				mutex.Lock()
-				oldLastIndex := Blockchain[len(Blockchain)-1]
+				prevBlock := Blockchain[len(Blockchain)-1]
 				mutex.Unlock()
 
 				// create newBlock for consideration to be forged
-				newBlock, err := generateBlock(oldLastIndex, bpm, address)
+				newBlock, err := generateBlock(prevBlock, bpm, address)
 				if err != nil {
 					log.Println(err)
 					continue
 				}
-				if isBlockValid(newBlock, oldLastIndex) {
+				if isBlockValid(newBlock, prevBlock) {
 					candidateBlocks <- newBlock
 				}
 				io.WriteString(conn, "\nEnter a new BPM:")
@@ -256,7 +255,7 @@ func calculateHash(s string) string {
 
 //calculateBlockHash returns the hash of all block information
 func calculateBlockHash(block Block) string {
-	record := string(block.Index) + block.Timestamp + string(block.BPM) + block.PrevHash
+	record := strconv.Itoa(block.Index) + block.Timestamp + strconv.Itoa(block.BPM) + block.Validator + block.PrevHash
 	return calculateHash(record)
 }
 
@@ -271,8 +270,8 @@ func generateBlock(oldBlock Block, BPM int, address string) (Block, error) {
 	newBlock.Timestamp = t.String()
 	newBlock.BPM = BPM
 	newBlock.PrevHash = oldBlock.Hash
-	newBlock.Hash = calculateBlockHash(newBlock)
 	newBlock.Validator = address
+	newBlock.Hash = calculateBlockHash(newBlock)
 
 	return newBlock, nil
 }

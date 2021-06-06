@@ -96,7 +96,6 @@ func handleGetBlockchain(w http.ResponseWriter, r *http.Request) {
 
 // takes JSON payload as an input for heart rate (BPM)
 func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	var msg Message
 
 	decoder := json.NewDecoder(r.Body)
@@ -121,6 +120,7 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 }
 
 func respondWithJSON(w http.ResponseWriter, r *http.Request, code int, payload interface{}) {
+	w.Header().Set("Content-Type", "application/json")
 	response, err := json.MarshalIndent(payload, "", "  ")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
