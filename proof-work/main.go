@@ -102,7 +102,6 @@ func handleGetBlockchain(w http.ResponseWriter, r *http.Request) {
 
 // takes JSON payload as an input for heart rate (BPM)
 func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	var m Message
 
 	decoder := json.NewDecoder(r.Body)
@@ -114,13 +113,14 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 
 	//ensure atomicity when creating new block
 	mutex.Lock()
-	newBlock := generateBlock(Blockchain[len(Blockchain)-1], m.BPM)
-	mutex.Unlock()
+	prevBlock := Blockchain[len(Blockchain)-1]
+	newBlock := generateBlock(prevBlock, m.BPM)
 
-	if isBlockValid(newBlock, Blockchain[len(Blockchain)-1]) {
+	if isBlockValid(newBlock, prevBlock) {
 		Blockchain = append(Blockchain, newBlock)
 		spew.Dump(Blockchain)
 	}
+	mutex.Unlock()
 
 	respondWithJSON(w, r, http.StatusCreated, newBlock)
 
