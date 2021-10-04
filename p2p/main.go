@@ -20,14 +20,14 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 	golog "github.com/ipfs/go-log"
+	gologging "github.com/ipfs/go-log"
 	libp2p "github.com/libp2p/go-libp2p"
-	crypto "github.com/libp2p/go-libp2p-crypto"
-	host "github.com/libp2p/go-libp2p-host"
-	net "github.com/libp2p/go-libp2p-net"
-	peer "github.com/libp2p/go-libp2p-peer"
-	pstore "github.com/libp2p/go-libp2p-peerstore"
+	net "github.com/libp2p/go-libp2p-core"
+	crypto "github.com/libp2p/go-libp2p-core/crypto"
+	host "github.com/libp2p/go-libp2p-core/host"
+	peer "github.com/libp2p/go-libp2p-core/peer"
+	pstore "github.com/libp2p/go-libp2p-core/peerstore"
 	ma "github.com/multiformats/go-multiaddr"
-	gologging "github.com/whyrusleeping/go-logging"
 )
 
 // Block represents each 'item' in the blockchain
@@ -215,7 +215,7 @@ func main() {
 	// LibP2P code uses golog to log messages. They log with different
 	// string IDs (i.e. "swarm"). We can control the verbosity level for
 	// all loggers with:
-	golog.SetAllLoggers(gologging.INFO) // Change to DEBUG for extra info
+	golog.SetAllLoggers(gologging.LevelInfo) // Change to DEBUG for extra info
 
 	// Parse options from the command line
 	listenF := flag.Int("l", 0, "wait for incoming connections")
@@ -257,7 +257,7 @@ func main() {
 			log.Fatalln(err)
 		}
 
-		peerid, err := peer.IDB58Decode(pid)
+		peerid, err := peer.Decode(pid)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -265,7 +265,7 @@ func main() {
 		// Decapsulate the /ipfs/<peerID> part from the target
 		// /ip4/<a.b.c.d>/ipfs/<peer> becomes /ip4/<a.b.c.d>
 		targetPeerAddr, _ := ma.NewMultiaddr(
-			fmt.Sprintf("/ipfs/%s", peer.IDB58Encode(peerid)))
+			fmt.Sprintf("/ipfs/%s", peer.Encode(peerid)))
 		targetAddr := ipfsaddr.Decapsulate(targetPeerAddr)
 
 		// We have a peer ID and a targetAddr so we add it to the peerstore
